@@ -13,28 +13,32 @@
         <h1 class="display-4">Novo Pedido</h1>
     </div>
 
-    <form action="/pedido/novo" method="post">
-        <div>
-            <label for="productName">Produto</label>
-            <input id="productName" name="productName" type="text" placeholder="Nome do produto" />
-            <small>Informe qual o nome do produto</small>
-        </div>
-        <div>
-            <label for="productUrl">URL</label>
-            <input id="productUrl" name="productUrl" type="text" placeholder="Url do produto" />
-            <small>Procure em um site o produto que deseja e cole a URL da pagina aqui</small>
-        </div>
-        <div>
-            <label for="imageUrl">Imagem</label>
-            <input id="imageUrl" name="imageUrl" type="text" placeholder="Url da imagem" />
-            <small>Copie a url de uma boa imagem do produto e cole aqui para ajudar a conseguir compradores</small>
-        </div>
-        <div>
-            <label for="description">Descrição</label>
-            <textarea id="description" name="description" type="text" placeholder="Adicione detalhes importantes para ajudar o comprador"></textarea>
-        </div>
-        <button type="submit">Cadastrar</button>
-    </form>
+    <div class="card mt-3">
+        <form th:object="${pedidoRequest}" class="card-body" action="/pedido/novo" method="post">
+            <div class="form-group">
+                <label for="productName">Produto</label>
+                <input th:field="*{productName}" class="form-control" type="text"
+                       placeholder="Nome do produto"/>
+                <small>Informe qual o nome do produto</small>
+            </div>
+            <div class="form-group">
+                <label for="productUrl">URL</label>
+                <input th:field="*{productUrl}" class="form-control" type="text" placeholder="Url do produto"/>
+                <small>Procure em um site o produto que deseja e cole a URL da pagina aqui</small>
+            </div>
+            <div class="form-group">
+                <label for="imageUrl">Imagem</label>
+                <input th:field="*{imageUrl}" class="form-control" type="text" placeholder="Url da imagem"/>
+                <small>Copie a url de uma boa imagem do produto e cole aqui para ajudar a conseguir compradores</small>
+            </div>
+            <div class="form-group">
+                <label for="description">Descrição</label>
+                <textarea th:field="*{description}" class="form-control" type="text"
+                          placeholder="Adicione detalhes importantes para ajudar o comprador"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </form>
+    </div>
 
 </div>
 
