@@ -9,6 +9,21 @@
 <body>
 
 <div class="container">
+    <div class="container-fluid bg-secondary text-light p-5">
+        <h1 class="display-4">Meus Pedidos</h1>
+    </div>
+    <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="">Todos</a>
+            <a class="nav-item nav-link" href="">Aguardando</a>
+            <a class="nav-item nav-link" href="">Aprovado</a>
+            <a class="nav-item nav-link" href="">Entregue</a>
+        </div>
+        <a href="/pedido/formulario">
+            <button class="btn btn-secondary">Novo</button>
+        </a>
+    </nav>
+
     <div class="card" th:each="pedido : ${orders}">
         <div class="card-header" th:text="${pedido.name}">Nome do Produto</div>
 
@@ -17,7 +32,8 @@
                 <div class="col-12 col-sm-8 mb-3">
                     <div class="row">
                         <div class="col-md-5">Valor <span th:text="${pedido.value}">200,99</span></div>
-                        <div class="col-md-7">Data de Entrega <span th:text="${pedido.deliveryDate}">10/02/2022</span></div>
+                        <div class="col-md-7">Data de Entrega <span th:text="${pedido.deliveryDate}">10/02/2022</span>
+                        </div>
                     </div>
                     <div>Produto</div>
                     <div><input class="form-control" th:value="${pedido.productURL}" value="URL do produto"/></div>
