@@ -9,24 +9,24 @@
 <body>
 
 <div class="container">
-    <div class="card" th:each="order : ${orders}">
-        <div class="card-header" th:text="${order.name}">Nome do Produto</div>
+    <div class="card" th:each="pedido : ${orders}">
+        <div class="card-header" th:text="${pedido.name}">Nome do Produto</div>
 
         <div class="card-body">
             <div class="row">
                 <div class="col-12 col-sm-8 mb-3">
                     <div class="row">
-                        <div class="col-md-5">Valor <span th:text="${order.value}">200,99</span></div>
-                        <div class="col-md-7">Data de Entrega <span th:text="${order.deliveryDate}">10/02/2022</span></div>
+                        <div class="col-md-5">Valor <span th:text="${pedido.value}">200,99</span></div>
+                        <div class="col-md-7">Data de Entrega <span th:text="${pedido.deliveryDate}">10/02/2022</span></div>
                     </div>
                     <div>Produto</div>
-                    <div><input class="form-control" th:value="${order.productURL}" value="URL do produto"/></div>
+                    <div><input class="form-control" th:value="${pedido.productURL}" value="URL do produto"/></div>
                     <div>Descrição</div>
-                    <div><textarea class="form-control" th:text="${order.description}">Descrição do order</textarea>
+                    <div><textarea class="form-control" th:text="${pedido.description}">Descrição do pedido</textarea>
                     </div>
                 </div>
                 <div class="col-12 col-sm-4">
-                    <img class="img-thumbnail" th:src="${order.imageURL}" src=""/>
+                    <img class="img-thumbnail" th:src="${pedido.imageURL}" src=""/>
                 </div>
             </div>
         </div>
