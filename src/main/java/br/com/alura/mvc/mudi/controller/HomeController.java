@@ -23,21 +23,8 @@ public class HomeController {
 
     @GetMapping
     public String home(Model model, Principal principal) {
-        List<Pedido> list = pedidoRepository.findAll();
+        List<Pedido> list = pedidoRepository.findByStatus(StatusPedido.ENTREGUE);
         model.addAttribute("orders", list);
         return "home";
-    }
-
-    @GetMapping("/{status}")
-    public String aguardando(@PathVariable("status") String status, Model model) {
-        List<Pedido> list = pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
-        model.addAttribute("orders", list);
-        model.addAttribute("status", status);
-        return "home";
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String onError() {
-        return "redirect:/home";
     }
 }
