@@ -15,29 +15,29 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "home")
-public class HomeController {
+@RequestMapping(path = "usuario")
+public class UserController {
 
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    @GetMapping
+    @GetMapping("pedidos")
     public String home(Model model, Principal principal) {
-        List<Pedido> list = pedidoRepository.findAll();
+        List<Pedido> list = pedidoRepository.findAllByUser(principal.getName());
         model.addAttribute("orders", list);
-        return "home";
+        return "usuario/home";
     }
 
-    @GetMapping("/{status}")
-    public String aguardando(@PathVariable("status") String status, Model model) {
-        List<Pedido> list = pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
+    @GetMapping("/pedidos/{status}")
+    public String byStatus(@PathVariable("status") String status, Model model, Principal principal) {
+        List<Pedido> list = pedidoRepository.findByStatusAndUser(StatusPedido.valueOf(status.toUpperCase()), principal.getName());
         model.addAttribute("orders", list);
         model.addAttribute("status", status);
-        return "home";
+        return "usuario/home";
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public String onError() {
-        return "redirect:/home";
+        return "redirect:/usuario/home";
     }
 }
