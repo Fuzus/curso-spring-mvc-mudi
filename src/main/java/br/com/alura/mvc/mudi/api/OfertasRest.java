@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -20,7 +21,7 @@ public class OfertasRest {
     private PedidoRepository pedidoRepository;
 
     @PostMapping
-    public Offer createOferta(@RequestBody NewOfferRequest request) {
+    public Offer createOferta(@Valid @RequestBody NewOfferRequest request) {
 
         Optional<Pedido> pedidoBuscado = pedidoRepository.findById(request.getPedidoId());
         if (!pedidoBuscado.isPresent()) {
