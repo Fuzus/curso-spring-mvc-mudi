@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{base :: head}"></head>
+<body onload="onLoad()">
+<div th:replace="~{base :: logo}"></div>
 
+<div class="container" id="ofertas">
+    <div th:replace="~{base :: titulo('Faça sua Oferta')}"></div>
+
+    <div class="card mb-3" v-for="pedido in pedidos">
+        <div class="card-header alert alert-dark"> {{ pedido.name }} </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-sm-8 mb-3">
+                    <div class="row">
+                        <div class="col-md-5">Valor <input /></div>
+                        <div class="col-md-7">Data de Entrega <input /></div>
+                    </div>
+                    <div>Produto</div>
+                    <div><a v-bind:href="pedido.productURL" value="URL do produto">{{pedido.name}}</a></div>
+                    <div>Descrição</div>
+                    <div><textarea class="form-control">{{pedido.description}}</textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <img class="img-thumbnail" v-binnd:src="pedido.imageURL" src=""/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function onLoad() {
+        var app = new Vue(
+        {
+            el : '#ofertas',
+            data : {
+                pedidos : [
+                    {
+                        "id":1,
+                        "name":"Smartphone Xiaomi Redmi Note 8",
+                        "value":null,
+                        "deliveryDate":null,
+                        "productURL":"https://www.amazon.com.br/Smartphone-Xiaomi-Redmi-Note-Camera/dp/B07Z5BBG56/ref=sr_1_1?keywords=redmi+8&qid=1672873627&sr=8-1",
+                        "imageURL":"https://m.media-amazon.com/images/I/51RIqTiRc8L._AC_SX679_.jpg",
+                        "description":"Uma descricao qualquer para esse pedido",
+                        "status":"AGUARDANDO"
+                    }
+                ]
+            }
+        });
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </body>
 </html>
