@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Pedido {
@@ -23,6 +24,9 @@ public class Pedido {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.LAZY)
+    List<Offer> offers;
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
@@ -97,5 +101,13 @@ public class Pedido {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 }
