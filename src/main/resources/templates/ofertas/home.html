@@ -20,9 +20,18 @@
                         <textarea disabled="disabled" class="form-control">{{pedido.description}}</textarea>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-5">Valor <input class="form-control" v-model="pedido.value"/></div>
-                        <div class="col-md-7">Data de Entrega <input class="form-control"
-                                                                     v-model="pedido.deliveryDate"/></div>
+                        <div class="col-md-5">
+                            Valor <input v-bind:class="{'is-invalid' : pedido.errors.price !== ''}" class="form-control" v-model="pedido.value"/>
+                            <div class="invalid-feedback" v-if="pedido.errors.price">
+                                {{ pedido.errors.price }}
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            Data de Entrega <input v-bind:class="{'is-invalid' : pedido.errors.deliveryDate !== ''}" class="form-control" v-model="pedido.deliveryDate"/>
+                            <div class="invalid-feedback" v-if="pedido.errors.deliveryDate">
+                                {{ pedido.errors.deliveryDate }}
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-3">
                         <label>Comentário</label>
@@ -52,13 +61,24 @@
                     .get('http://localhost:8080/api/pedidos/aguardando')
                     .then(response => {
                         console.log(response.data)
-                        response.data.forEach(pedido => pedido.ofertaEnviada = false)
+                        response.data.forEach(pedido => {
+                            pedido.ofertaEnviada = false
+                            pedido.errors = {
+                                price : '',
+                                deliveryDate : ''
+                            }
+                        })
                         this.pedidos = response.data
 
                     })
             },
             methods: {
                 enviarOferta : function(pedido) {
+                    pedido.errors = {
+                                price : '',
+                                deliveryDate : ''
+                    }
+
                     axios
                         .post('http://localhost:8080/api/ofertas', {
                             pedidoId : pedido.id,
@@ -67,10 +87,16 @@
                             comment : pedido.comment
                         })
                         .then(response => pedido.ofertaEnviada = true)
+                        .catch(error => {
+                            error.response.data.errors.forEach( error => {
+                                pedido.errors[error.field] = error.defaultMessage;
+                            })
+                        })
                 }
             }
         });
     }
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
