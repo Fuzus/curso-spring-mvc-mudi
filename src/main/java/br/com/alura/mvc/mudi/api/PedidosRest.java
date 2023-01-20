@@ -6,6 +6,7 @@ import br.com.alura.mvc.mudi.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +21,12 @@ public class PedidosRest {
     private PedidoRepository pedidoRepository;
 
     @GetMapping("aguardando")
-    public List<Pedido> getPedidosAguardandoOferta(){
+    public ResponseEntity<List<Pedido>> getPedidosAguardandoOferta(){
         Sort sort = Sort.by("id").descending();
         PageRequest page = PageRequest.of(0, 10, sort);
 
-        return pedidoRepository.findByStatus(StatusPedido.AGUARDANDO, page);
+        List<Pedido> list = pedidoRepository.findByStatus(StatusPedido.AGUARDANDO, page);
+
+        return ResponseEntity.ok().body(list);
     }
 }

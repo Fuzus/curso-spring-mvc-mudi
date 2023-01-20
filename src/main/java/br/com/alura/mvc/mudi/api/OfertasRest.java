@@ -5,6 +5,7 @@ import br.com.alura.mvc.mudi.model.Offer;
 import br.com.alura.mvc.mudi.model.Pedido;
 import br.com.alura.mvc.mudi.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class OfertasRest {
     private PedidoRepository pedidoRepository;
 
     @PostMapping
-    public Offer createOferta(@Valid @RequestBody NewOfferRequest request) {
+    public ResponseEntity<Offer> createOferta(@Valid @RequestBody NewOfferRequest request) {
 
         Optional<Pedido> pedidoBuscado = pedidoRepository.findById(request.getPedidoId());
         if (!pedidoBuscado.isPresent()) {
@@ -35,6 +36,6 @@ public class OfertasRest {
 
         pedidoRepository.save(pedido);
 
-        return offer;
+        return ResponseEntity.ok().body(offer);
     }
 }
